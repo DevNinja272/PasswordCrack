@@ -5,7 +5,7 @@ import Operations.Operation;
  */
 public interface Relational {
     boolean isCommutativeWith(Operation op);
-    boolean isNegatedBy(Operation op);
+    Operation isNegatedBy(Operation op);
     boolean doesCancel(Operation op);
     boolean isUsefulFor(Chain chain);
 }
