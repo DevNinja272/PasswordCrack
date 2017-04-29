@@ -1,21 +1,33 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
+import java.util.Stack;
+
 public class NCapitalize implements Operation
 {
+    private Stack<Integer> affectedIndices = new Stack<>();
+
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
-        String uppercase = s.substring(1, s.length()).toUpperCase();
-        s.replace(1, s.length(), uppercase);
+        for (int i = 1; i < s.length(); i++)
+        {
+            char cand = s.charAt(i);
+            if (Character.isLowerCase(i))
+            {
+                s.replace(i, i, "" + Character.toUpperCase(cand));
+                affectedIndices.push(i);
+            }
+        }
     }
 
     @Override
     public void undo(StringBuilder s)
     {
-        String lowercase = s.substring(1, s.length()).toLowerCase();
-        s.replace(1, s.length(), lowercase);
+        Integer index;
+        while (!affectedIndices.empty())
+        {
+            index = affectedIndices.pop();
+            s.replace(index, index, "" + Character.toLowerCase(s.charAt(index)));
+        }
     }
 }

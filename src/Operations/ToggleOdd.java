@@ -1,19 +1,21 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
+import java.util.Stack;
+
 public class ToggleOdd implements Operation
 {
+    private Stack<Integer> affectedIndices = new Stack<>();
+
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
-        for (int i = 0; i < s.length(); i++)
+        for (int i = 1; i < s.length(); i += 2)
         {
-            if (i % 2 == 1) // odd
+            char cand = s.charAt(i);
+            if (Character.isLowerCase(cand))
             {
-                String character = "" + Character.toUpperCase(s.charAt(i));
-                s.replace(i, i, character);
+                s.replace(i, i, "" + Character.toUpperCase(cand));
+                affectedIndices.push(i);
             }
         }
     }
@@ -21,13 +23,11 @@ public class ToggleOdd implements Operation
     @Override
     public void undo(StringBuilder s)
     {
-        for (int i = 0; i < s.length(); i++)
+        Integer index;
+        while (!affectedIndices.empty())
         {
-            if (i % 2 == 1) // odd
-            {
-                String character = "" + Character.toLowerCase(s.charAt(i));
-                s.replace(i, i, character);
-            }
+            index = affectedIndices.pop();
+            s.replace(index, index, "" + Character.toLowerCase(s.charAt(index)));
         }
     }
 }

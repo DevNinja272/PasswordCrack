@@ -1,19 +1,23 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
 public class DeleteFirst implements Operation
 {
+    private char deleted = '\0';
+
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
-        new Prepend().undo(s, c);
+        deleted = s.charAt(0);
+        s.deleteCharAt(0);
     }
 
     @Override
-    public void undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
-        new Prepend().apply(s, c);
+        if (deleted != '\0')
+        {
+            s.insert(0, deleted);
+            deleted = '\0';
+        }
     }
 }

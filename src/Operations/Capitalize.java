@@ -1,11 +1,8 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
 public class Capitalize implements Operation
 {
-    private boolean effectedString = false;
+    private boolean affectedString = false;
 
     @Override
     public void apply(StringBuilder s, StringBuilder c)
@@ -14,17 +11,17 @@ public class Capitalize implements Operation
         if (Character.isLowerCase(cand))
         {
             s.replace(0, 0, "" + Character.toUpperCase(cand));
-            effectedString = true;
+            affectedString = true;
         }
     }
 
     @Override
     public void undo(StringBuilder s)
     {
-        if (effectedString)
+        if (affectedString)
         {
             s.replace(0, 0, "" + Character.toLowerCase(s.charAt(0)));
-            effectedString = false;
+            affectedString = false;
         }
     }
 }

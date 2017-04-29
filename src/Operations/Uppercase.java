@@ -1,21 +1,33 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
+import java.util.Stack;
+
 public class Uppercase implements Operation
 {
+    private Stack<Integer> affectedIndices = new Stack<>();
+
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
-        String uppercase = s.toString().toUpperCase();
-        s.replace(0, s.length(), uppercase);
+        for (int i = 0; i < s.length(); i++)
+        {
+            char cand = s.charAt(i);
+            if (Character.isLowerCase(i))
+            {
+                s.replace(i, i, "" + Character.toUpperCase(cand));
+                affectedIndices.push(i);
+            }
+        }
     }
 
     @Override
     public void undo(StringBuilder s)
     {
-        String lowercase = s.toString().toLowerCase();
-        s.replace(0, s.length(), lowercase);
+        Integer index;
+        while (!affectedIndices.empty())
+        {
+            index = affectedIndices.pop();
+            s.replace(index, index, "" + Character.toLowerCase(s.charAt(index)));
+        }
     }
 }

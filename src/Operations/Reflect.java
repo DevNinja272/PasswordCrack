@@ -1,22 +1,24 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
 public class Reflect implements Operation
 {
-    int size = 0;
+    private boolean applied = false;
 
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
-        size = s.length();
         s.append(s.reverse());
+        applied = true;
     }
 
     @Override
-    public void undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
-        s.delete(size, s.length());
+        if (applied)
+        {
+            int len = s.length();
+            s.delete(len / 2, len);
+            applied = false;
+        }
     }
 }

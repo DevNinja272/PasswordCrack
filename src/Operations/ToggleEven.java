@@ -1,27 +1,33 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
+import java.util.Stack;
+
 public class ToggleEven implements Operation
 {
+    private Stack<Integer> affectedIndices = new Stack<>();
+
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
         for (int i = 0; i < s.length(); i += 2)
         {
-            String character = "" + Character.toUpperCase(s.charAt(i));
-            s.replace(i, i, character);
+            char cand = s.charAt(i);
+            if (Character.isLowerCase(cand))
+            {
+                s.replace(i, i, "" + Character.toUpperCase(cand));
+                affectedIndices.push(i);
+            }
         }
     }
 
     @Override
     public void undo(StringBuilder s)
     {
-        for (int i = 0; i < s.length(); i += 2)
+        Integer index;
+        while (!affectedIndices.empty())
         {
-            String character = "" + Character.toUpperCase(s.charAt(i));
-            s.replace(i, i, character);
+            index = affectedIndices.pop();
+            s.replace(index, index, "" + Character.toLowerCase(s.charAt(index)));
         }
     }
 }

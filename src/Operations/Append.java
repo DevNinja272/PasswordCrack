@@ -1,19 +1,21 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
 public class Append implements Operation
 {
+    private int lengthAffected = 0;
+
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
         s.append(c);
+        lengthAffected = c.length();
     }
 
     @Override
-    public void undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
-        s.deleteCharAt(s.length() - 1);
+        int len = s.length();
+        s.delete(len - lengthAffected, len);
+        lengthAffected = 0;
     }
 }

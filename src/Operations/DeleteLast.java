@@ -1,19 +1,24 @@
 package Operations;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
 public class DeleteLast implements Operation
 {
+    private char deleted = '\0';
+
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
-        new Append().undo(s, c);
+        int len = s.length();
+        deleted = s.charAt(len);
+        s.deleteCharAt(len);
     }
 
     @Override
-    public void undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
-        new Append().apply(s, c);
+        if (deleted != '\0')
+        {
+            s.append(deleted);
+            deleted = '\0';
+        }
     }
 }
