@@ -3,9 +3,11 @@ package Operations;
 /**
  * Created by Jinwook on 4/27/2017.
  */
-public class ToggleOdd implements Operation {
+public class ToggleOdd implements Operation
+{
     @Override
-    public StringBuilder apply(StringBuilder s, StringBuilder c) {
+    public StringBuilder apply(StringBuilder s, StringBuilder c)
+    {
         for (int i = 0; i < s.length(); i++)
         {
             if (i % 2 == 1) // odd
@@ -18,7 +20,8 @@ public class ToggleOdd implements Operation {
     }
 
     @Override
-    public StringBuilder undo(StringBuilder s, StringBuilder c) {
+    public StringBuilder undo(StringBuilder s, StringBuilder c)
+    {
         for (int i = 0; i < s.length(); i++)
         {
             if (i % 2 == 1) // odd

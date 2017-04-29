@@ -8,4 +8,9 @@ public class AppendRelation implements Relational{
     public boolean isCommutativeWith(Operation op) {
         return false;
     }
+
+    @Override
+    public boolean doesCancel(Operation op) {
+        return true;
+    }
 }
