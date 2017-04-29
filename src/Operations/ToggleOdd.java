@@ -19,7 +19,7 @@ public class ToggleOdd implements Operation
     }
 
     @Override
-    public void undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
         for (int i = 0; i < s.length(); i++)
         {

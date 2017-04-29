@@ -12,7 +12,7 @@ public class Lowercase implements Operation
     }
 
     @Override
-    public void undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
         new Uppercase().apply(s, c);
     }

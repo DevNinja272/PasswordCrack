@@ -16,7 +16,7 @@ public class ToggleEven implements Operation
     }
 
     @Override
-    public StringBuilder undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
         for (int i = 0; i < s.length(); i += 2)
         {

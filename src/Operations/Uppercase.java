@@ -6,16 +6,16 @@ package Operations;
 public class Uppercase implements Operation
 {
     @Override
-    public StringBuilder apply(StringBuilder s, StringBuilder c)
+    public void apply(StringBuilder s, StringBuilder c)
     {
         String uppercase = s.toString().toUpperCase();
-        return s.replace(0, s.length(), uppercase);
+        s.replace(0, s.length(), uppercase);
     }
 
     @Override
-    public StringBuilder undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
         String lowercase = s.toString().toLowerCase();
-        return s.replace(0, s.length(), lowercase);
+        s.replace(0, s.length(), lowercase);
     }
 }

@@ -19,7 +19,7 @@ public class Capitalize implements Operation
     }
 
     @Override
-    public void undo(StringBuilder s, StringBuilder c)
+    public void undo(StringBuilder s)
     {
         if (effectedString)
         {
