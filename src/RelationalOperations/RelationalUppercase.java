@@ -1,11 +1,16 @@
-package OperationRelations;
+package RelationalOperations;
 import Operations.*;
 
-/**
- * Created by Jinwook on 4/28/2017.
- */
-public class UppercaseRelation implements Relational
+public class RelationalUppercase extends RelationalOperation
 {
+    private final Operation op = new Uppercase();
+
+    @Override
+    public Operation op()
+    {
+        return this.op;
+    }
+
     @Override
     public boolean isCommutativeWith(Operation op)
     {
@@ -37,7 +42,7 @@ public class UppercaseRelation implements Relational
     }
 
     @Override
-    public boolean isUsefulFor(Chain chain)
+    public boolean isUsefulFor(OeprationChain chain)
     {
         return true;
     }

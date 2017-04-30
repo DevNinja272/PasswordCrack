@@ -1,11 +1,16 @@
-package OperationRelations;
+package RelationalOperations;
 import Operations.*;
 
-/**
- * Created by Jinwook on 4/28/2017.
- */
-public class DeleteFirstRelation implements Relational
+public class RelationalDeleteFirst extends RelationalOperation
 {
+    private final Operation op = new DeleteFirst();
+
+    @Override
+    public Operation op()
+    {
+        return this.op;
+    }
+
     @Override
     public boolean isCommutativeWith(Operations.Operation op)
     {
@@ -28,7 +33,7 @@ public class DeleteFirstRelation implements Relational
     }
 
     @Override
-    public boolean isUsefulFor(Chain chain)
+    public boolean isUsefulFor(OeprationChain chain)
     {
         return true;
     }

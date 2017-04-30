@@ -1,11 +1,16 @@
-package OperationRelations;
+package RelationalOperations;
 import Operations.*;
 
-/**
- * Created by Jinwook on 4/27/2017.
- */
-public class AppendRelation implements Relational
+public class RelationalAppend extends RelationalOperation
 {
+    private final Operation op = new Append();
+
+    @Override
+    public Operation op()
+    {
+        return this.op;
+    }
+
     @Override
     public boolean isCommutativeWith(Operation op)
     {
@@ -26,7 +31,7 @@ public class AppendRelation implements Relational
     }
 
     @Override
-    public boolean isUsefulFor(Chain chain)
+    public boolean isUsefulFor(OeprationChain chain)
     {
         return true;
     }

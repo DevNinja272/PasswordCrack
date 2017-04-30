@@ -1,11 +1,16 @@
-package OperationRelations;
+package RelationalOperations;
 import Operations.*;
 
-/**
- * Created by Jinwook on 4/28/2017.
- */
-public class CapitalizeRelation implements Relational
+public class RelationalCapitalize extends RelationalOperation
 {
+    private final Operation op = new Capitalize();
+
+    @Override
+    public Operation op()
+    {
+        return this.op;
+    }
+
     @Override
     public boolean isCommutativeWith(Operations.Operation op)
     {
@@ -25,7 +30,7 @@ public class CapitalizeRelation implements Relational
     }
 
     @Override
-    public boolean isUsefulFor(Chain chain)
+    public boolean isUsefulFor(OeprationChain chain)
     {
         return true;
     }

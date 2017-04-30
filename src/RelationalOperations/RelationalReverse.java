@@ -1,11 +1,16 @@
-package OperationRelations;
+package RelationalOperations;
 import Operations.*;
 
-/**
- * Created by Jinwook on 4/28/2017.
- */
-public class ReverseRelation implements Relational
+public class RelationalReverse extends RelationalOperation
 {
+    private final Operation op = new Reverse();
+
+    @Override
+    public Operation op()
+    {
+        return this.op;
+    }
+
     @Override
     public boolean isCommutativeWith(Operations.Operation op)
     {
@@ -34,7 +39,7 @@ public class ReverseRelation implements Relational
     }
 
     @Override
-    public boolean isUsefulFor(Chain chain)
+    public boolean isUsefulFor(OeprationChain chain)
     {
         return true;
     }

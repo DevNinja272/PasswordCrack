@@ -1,11 +1,16 @@
-package OperationRelations;
+package RelationalOperations;
 import Operations.*;
 
-/**
- * Created by Jinwook on 4/28/2017.
- */
-public class DuplicateRelation implements Relational
+public class RelationalDuplicate extends RelationalOperation
 {
+    private final Operation op = new Duplicate();
+
+    @Override
+    public Operation op()
+    {
+        return this.op;
+    }
+
     @Override
     public boolean isCommutativeWith(Operation op)
     {
@@ -28,7 +33,7 @@ public class DuplicateRelation implements Relational
     }
 
     @Override
-    public boolean isUsefulFor(Chain chain)
+    public boolean isUsefulFor(OeprationChain chain)
     {
         return true;
     }

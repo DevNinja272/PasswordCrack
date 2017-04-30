@@ -1,11 +1,16 @@
-package OperationRelations;
+package RelationalOperations;
 import Operations.*;
 
-/**
- * Created by Jinwook on 4/28/2017.
- */
-public class ToggleOddRelation implements Relational
+public class RelationalToggleOdd extends RelationalOperation
 {
+    private final Operation op = new ToggleOdd();
+
+    @Override
+    public Operation op()
+    {
+        return this.op;
+    }
+
     @Override
     public boolean isCommutativeWith(Operations.Operation op)
     {
@@ -28,7 +33,7 @@ public class ToggleOddRelation implements Relational
     }
 
     @Override
-    public boolean isUsefulFor(Chain chain)
+    public boolean isUsefulFor(OeprationChain chain)
     {
         return true;
     }
