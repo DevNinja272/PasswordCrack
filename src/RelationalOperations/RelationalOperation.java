@@ -1,16 +1,14 @@
 package RelationalOperations;
 import Operations.Operation;
-import Operations.OeprationChain;
+import Operations.OperationChain;
 
-public abstract class RelationalOperation
+public interface RelationalOperation
 {
-    abstract Operation op();
+    Operation op();
 
-    abstract boolean isCommutativeWith(Operation op);
+    boolean isIndependentOf(RelationalOperation operation);
 
-    abstract Operation isNegatedBy(Operation op);
+    boolean subsumes(RelationalOperation operation);
 
-    abstract boolean doesCancel(Operation op);
-
-    abstract boolean isUsefulFor(OeprationChain chain);
+    boolean isUsefulFor(OperationChain chain);
 }

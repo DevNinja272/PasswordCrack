@@ -1,7 +1,7 @@
 package RelationalOperations;
 import Operations.*;
 
-public class RelationalPrepend extends RelationalOperation
+public class RelationalPrepend implements RelationalOperation
 {
     // TODO: Expansion - prepend.reflect == reflect.append.prepend, s.pre.ncap == s.upp.pre, toggle
 
@@ -14,26 +14,27 @@ public class RelationalPrepend extends RelationalOperation
     }
 
     @Override
-    public boolean isCommutativeWith(Operation op)
+    public boolean isIndependentOf(RelationalOperation operation)
     {
         // TODO: Prepend-depends on if same char, Uppercase, Lowercase
+        Operation op = operation.op();
         return op instanceof Append || op instanceof DeleteLast;
     }
 
     @Override
-    public Operation isNegatedBy(Operation op)
+    public RelationalOperation isNegatedBy(RelationalOperation operation)
     {
-        return (op instanceof Reverse) ? new Append() : null;
+        return (operation.op() instanceof Reverse) ? new RelationalAppend() : null;
     }
 
     @Override
-    public boolean doesCancel(Operation op)
+    public boolean subsumes(RelationalOperation operation)
     {
-        return op instanceof DeleteFirst;
+        return operation.op() instanceof DeleteFirst;
     }
 
     @Override
-    public boolean isUsefulFor(OeprationChain chain)
+    public boolean isUsefulFor(OperationChain chain)
     {
         return true;
     }

@@ -1,6 +1,5 @@
-import RelationalOperations.RelationalAppend;
-import RelationalOperations.RelationalOperation;
-import Operations.*;
+import Operations.Operation;
+import RelationalOperations.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +7,18 @@ import java.util.List;
 
 public class PasswordCracker
 {
-    private static final RelationalOperation[] operations = {new RelationalAppend()};
+    private static final RelationalOperation[] operations = {new RelationalAppend(),
+                                                             new RelationalCapitalize(),
+                                                             new RelationalDeleteFirst(),
+                                                             new RelationalDeleteLast(),
+                                                             new RelationalDuplicate(),
+                                                             new RelationalLowercase(),
+                                                             new RelationalNCapitalize(),
+                                                             new RelationalPrepend(),
+                                                             new RelationalReflect(),
+                                                             new RelationalReverse(),
+                                                             new RelationalToggleEven(),
+                                                             new RelationalToggleOdd()};
 
     private HashSet<String>     passwordHashes;
     private List<String>        words;

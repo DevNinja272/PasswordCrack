@@ -1,7 +1,7 @@
 package RelationalOperations;
 import Operations.*;
 
-public class RelationalUppercase extends RelationalOperation
+public class RelationalUppercase implements RelationalOperation
 {
     private final Operation op = new Uppercase();
 
@@ -12,8 +12,9 @@ public class RelationalUppercase extends RelationalOperation
     }
 
     @Override
-    public boolean isCommutativeWith(Operation op)
+    public boolean isIndependentOf(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof DeleteFirst
                || op instanceof DeleteLast
                || op instanceof Reverse
@@ -27,14 +28,15 @@ public class RelationalUppercase extends RelationalOperation
     }
 
     @Override
-    public Operation isNegatedBy(Operation op)
+    public RelationalOperation isNegatedBy(RelationalOperation op)
     {
         return null;
     }
 
     @Override
-    public boolean doesCancel(Operation op)
+    public boolean subsumes(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof Capitalize
                || op instanceof NCapitalize
                || op instanceof ToggleOdd
@@ -42,7 +44,7 @@ public class RelationalUppercase extends RelationalOperation
     }
 
     @Override
-    public boolean isUsefulFor(OeprationChain chain)
+    public boolean isUsefulFor(OperationChain chain)
     {
         return true;
     }

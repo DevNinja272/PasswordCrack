@@ -1,7 +1,7 @@
 package RelationalOperations;
 import Operations.*;
 
-public class RelationalCapitalize extends RelationalOperation
+public class RelationalCapitalize implements RelationalOperation
 {
     private final Operation op = new Capitalize();
 
@@ -12,25 +12,20 @@ public class RelationalCapitalize extends RelationalOperation
     }
 
     @Override
-    public boolean isCommutativeWith(Operations.Operation op)
+    public boolean isIndependentOf(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof Append || op instanceof DeleteLast;
     }
 
     @Override
-    public Operations.Operation isNegatedBy(Operations.Operation op)
-    {
-        return null;
-    }
-
-    @Override
-    public boolean doesCancel(Operations.Operation op)
+    public boolean subsumes(RelationalOperation operation)
     {
         return false;
     }
 
     @Override
-    public boolean isUsefulFor(OeprationChain chain)
+    public boolean isUsefulFor(OperationChain chain)
     {
         return true;
     }

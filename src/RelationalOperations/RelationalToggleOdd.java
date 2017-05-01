@@ -1,7 +1,7 @@
 package RelationalOperations;
 import Operations.*;
 
-public class RelationalToggleOdd extends RelationalOperation
+public class RelationalToggleOdd implements RelationalOperation
 {
     private final Operation op = new ToggleOdd();
 
@@ -12,8 +12,9 @@ public class RelationalToggleOdd extends RelationalOperation
     }
 
     @Override
-    public boolean isCommutativeWith(Operations.Operation op)
+    public boolean isIndependentOf(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof Reverse
                || op instanceof Uppercase
                || op instanceof Lowercase
@@ -21,19 +22,19 @@ public class RelationalToggleOdd extends RelationalOperation
     }
 
     @Override
-    public Operations.Operation isNegatedBy(Operations.Operation op)
+    public RelationalOperation isNegatedBy(RelationalOperation operation)
     {
         return null;
     }
 
     @Override
-    public boolean doesCancel(Operations.Operation op)
+    public boolean subsumes(RelationalOperation operation)
     {
-        return op instanceof ToggleOdd;
+        return operation.op() instanceof ToggleOdd;
     }
 
     @Override
-    public boolean isUsefulFor(OeprationChain chain)
+    public boolean isUsefulFor(OperationChain chain)
     {
         return true;
     }
