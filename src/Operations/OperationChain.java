@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Stack;
 
-public class OeprationChain
+public class OperationChain
 {
     private Stack<RelationalOperation> listOfOps;
     List<StringBuilder> results;
 
-    public OeprationChain(List<String> seeds)
+    public OperationChain(List<String> seeds)
     {
         listOfOps = new Stack<>();
         results = new ArrayList<>(seeds.size());
