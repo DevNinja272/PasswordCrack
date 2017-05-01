@@ -1,7 +1,7 @@
 package RelationalOperations;
 import Operations.*;
 
-public class RelationalLowercase extends RelationalOperation
+public class RelationalLowercase implements RelationalOperation
 {
     private final Operation op = new Lowercase();
 
@@ -12,8 +12,9 @@ public class RelationalLowercase extends RelationalOperation
     }
 
     @Override
-    public boolean isCommutativeWith(Operation op)
+    public boolean isIndependentOf(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof DeleteFirst
                || op instanceof DeleteLast
                || op instanceof Reverse
@@ -24,19 +25,20 @@ public class RelationalLowercase extends RelationalOperation
     }
 
     @Override
-    public Operation isNegatedBy(Operation op)
+    public RelationalOperation isNegatedBy(RelationalOperation operation)
     {
         return null;
     }
 
     @Override
-    public boolean doesCancel(Operation op)
+    public boolean subsumes(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof Lowercase || op instanceof ToggleEven;
     }
 
     @Override
-    public boolean isUsefulFor(OeprationChain chain)
+    public boolean isUsefulFor(OperationChain chain)
     {
         return true;
     }

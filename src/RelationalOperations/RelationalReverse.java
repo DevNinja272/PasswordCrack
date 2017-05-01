@@ -1,7 +1,7 @@
 package RelationalOperations;
 import Operations.*;
 
-public class RelationalReverse extends RelationalOperation
+public class RelationalReverse implements RelationalOperation
 {
     private final Operation op = new Reverse();
 
@@ -12,8 +12,9 @@ public class RelationalReverse extends RelationalOperation
     }
 
     @Override
-    public boolean isCommutativeWith(Operations.Operation op)
+    public boolean isIndependentOf(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof Prepend
                || op instanceof Duplicate
                || op instanceof Uppercase
@@ -22,24 +23,25 @@ public class RelationalReverse extends RelationalOperation
     }
 
     @Override
-    public Operations.Operation isNegatedBy(Operations.Operation op)
+    public RelationalOperation isNegatedBy(RelationalOperation operation)
     {
-        if (op instanceof Prepend) { return new Append(); }
-        else if (op instanceof Append) { return new Prepend(); }
-        else if (op instanceof DeleteFirst) { return new DeleteLast(); }
-        else if (op instanceof DeleteLast) { return new DeleteFirst(); }
+        Operation op = operation.op();
+        if (op instanceof Prepend) { return new RelationalAppend(); }
+        else if (op instanceof Append) { return new RelationalPrepend(); }
+        else if (op instanceof DeleteFirst) { return new RelationalDeleteLast(); }
+        else if (op instanceof DeleteLast) { return new RelationalDeleteFirst(); }
 
         return null;
     }
 
     @Override
-    public boolean doesCancel(Operations.Operation op)
+    public boolean subsumes(RelationalOperation operation)
     {
-        return op instanceof Reverse;
+        return operation.op() instanceof Reverse;
     }
 
     @Override
-    public boolean isUsefulFor(OeprationChain chain)
+    public boolean isUsefulFor(OperationChain chain)
     {
         return true;
     }

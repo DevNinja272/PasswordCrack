@@ -1,7 +1,7 @@
 package RelationalOperations;
 import Operations.*;
 
-public class RelationalToggleEven extends RelationalOperation
+public class RelationalToggleEven implements RelationalOperation
 {
     private final Operation op = new ToggleEven();
 
@@ -12,25 +12,27 @@ public class RelationalToggleEven extends RelationalOperation
     }
 
     @Override
-    public boolean isCommutativeWith(Operation op)
+    public boolean isIndependentOf(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof Uppercase || op instanceof Lowercase || op instanceof NCapitalize;
     }
 
     @Override
-    public Operations.Operation isNegatedBy(Operation op)
+    public RelationalOperation isNegatedBy(RelationalOperation operation)
     {
         return null;
     }
 
     @Override
-    public boolean doesCancel(Operation op)
+    public boolean subsumes(RelationalOperation operation)
     {
+        Operation op = operation.op();
         return op instanceof Capitalize || op instanceof ToggleEven;
     }
 
     @Override
-    public boolean isUsefulFor(OeprationChain chain)
+    public boolean isUsefulFor(OperationChain chain)
     {
         return true;
     }
