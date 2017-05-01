@@ -14,23 +14,7 @@ public class RelationalUppercase implements RelationalOperation
     @Override
     public boolean isIndependentOf(RelationalOperation operation)
     {
-        Operation op = operation.op();
-        return op instanceof DeleteFirst
-               || op instanceof DeleteLast
-               || op instanceof Reverse
-               || op instanceof Duplicate
-               || op instanceof Reflect
-               || op instanceof Capitalize
-               || op instanceof NCapitalize
-               || op instanceof ToggleOdd
-               || op instanceof ToggleEven
-               || op instanceof Lowercase;
-    }
-
-    @Override
-    public RelationalOperation isNegatedBy(RelationalOperation op)
-    {
-        return null;
+        return operation.op() instanceof Lowercase;
     }
 
     @Override
@@ -40,12 +24,7 @@ public class RelationalUppercase implements RelationalOperation
         return op instanceof Capitalize
                || op instanceof NCapitalize
                || op instanceof ToggleOdd
-               || op instanceof ToggleEven;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
+               || op instanceof ToggleEven
+               || op instanceof Uppercase;
     }
 }

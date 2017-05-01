@@ -15,27 +15,12 @@ public class RelationalToggleOdd implements RelationalOperation
     public boolean isIndependentOf(RelationalOperation operation)
     {
         Operation op = operation.op();
-        return op instanceof Reverse
-               || op instanceof Uppercase
-               || op instanceof Lowercase
-               || op instanceof ToggleEven;
-    }
-
-    @Override
-    public RelationalOperation isNegatedBy(RelationalOperation operation)
-    {
-        return null;
+        return op instanceof ToggleEven || op instanceof Capitalize;
     }
 
     @Override
     public boolean subsumes(RelationalOperation operation)
     {
         return operation.op() instanceof ToggleOdd;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
     }
 }

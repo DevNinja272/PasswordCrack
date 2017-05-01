@@ -15,27 +15,12 @@ public class RelationalDeleteFirst implements RelationalOperation
     public boolean isIndependentOf(RelationalOperation operation)
     {
         Operation op = operation.op();
-        return op instanceof Append
-               || op instanceof DeleteLast
-               || op instanceof Uppercase
-               || op instanceof Lowercase;
-    }
-
-    @Override
-    public RelationalOperation isNegatedBy(RelationalOperation operation)
-    {
-        return (operation.op() instanceof Reverse) ? new RelationalDeleteLast() : null;
+        return op instanceof Append || op instanceof DeleteLast;
     }
 
     @Override
     public boolean subsumes(RelationalOperation operation)
     {
         return false;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
     }
 }

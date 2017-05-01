@@ -24,10 +24,4 @@ public class RelationalAppend implements RelationalOperation
         // TODO: Uppercase, Lowercase, Capitalize, nCapitalize, Toggle (even and odd)
         return operation.op() instanceof DeleteLast;
     }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
-    }
 }

@@ -14,28 +14,13 @@ public class RelationalNCapitalize implements RelationalOperation
     @Override
     public boolean isIndependentOf(RelationalOperation operation)
     {
-        Operation op = operation.op();
-        return op instanceof Uppercase
-               || op instanceof Lowercase
-               || op instanceof ToggleEven
-               || op instanceof ToggleOdd;
-    }
-
-    @Override
-    public RelationalOperation isNegatedBy(RelationalOperation operation)
-    {
-        return null;
+        return false;
     }
 
     @Override
     public boolean subsumes(RelationalOperation operation)
     {
-        return operation.op() instanceof NCapitalize;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
+        Operation op = operation.op();
+        return op instanceof ToggleOdd || op instanceof NCapitalize;
     }
 }

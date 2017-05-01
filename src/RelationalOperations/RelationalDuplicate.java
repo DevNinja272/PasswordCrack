@@ -14,28 +14,12 @@ public class RelationalDuplicate implements RelationalOperation
     @Override
     public boolean isIndependentOf(RelationalOperation operation)
     {
-        Operation op = operation.op();
-        return op instanceof Reverse
-               || op instanceof Uppercase
-               || op instanceof Lowercase
-               || op instanceof ToggleEven;
-    }
-
-    @Override
-    public RelationalOperation isNegatedBy(RelationalOperation operation)
-    {
-        return null;
+        return false;
     }
 
     @Override
     public boolean subsumes(RelationalOperation operation)
     {
-        return false;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
+        return operation.op() instanceof Reverse;
     }
 }

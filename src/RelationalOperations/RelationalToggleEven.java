@@ -14,26 +14,12 @@ public class RelationalToggleEven implements RelationalOperation
     @Override
     public boolean isIndependentOf(RelationalOperation operation)
     {
-        Operation op = operation.op();
-        return op instanceof Uppercase || op instanceof Lowercase || op instanceof NCapitalize;
-    }
-
-    @Override
-    public RelationalOperation isNegatedBy(RelationalOperation operation)
-    {
-        return null;
+        return operation.op() instanceof ToggleOdd;
     }
 
     @Override
     public boolean subsumes(RelationalOperation operation)
     {
-        Operation op = operation.op();
-        return op instanceof Capitalize || op instanceof ToggleEven;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
+        return operation.op() instanceof ToggleEven;
     }
 }

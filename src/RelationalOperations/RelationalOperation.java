@@ -9,6 +9,4 @@ public interface RelationalOperation
     boolean isIndependentOf(RelationalOperation operation);
 
     boolean subsumes(RelationalOperation operation);
-
-    boolean isUsefulFor(OperationChain chain);
 }

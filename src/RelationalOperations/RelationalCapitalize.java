@@ -15,18 +15,12 @@ public class RelationalCapitalize implements RelationalOperation
     public boolean isIndependentOf(RelationalOperation operation)
     {
         Operation op = operation.op();
-        return op instanceof Append || op instanceof DeleteLast;
+        return op instanceof Append || op instanceof DeleteLast || op instanceof ToggleOdd;
     }
 
     @Override
     public boolean subsumes(RelationalOperation operation)
     {
         return false;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
     }
 }

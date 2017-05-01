@@ -1,5 +1,8 @@
 package RelationalOperations;
-import Operations.*;
+import Operations.Lowercase;
+import Operations.Operation;
+import Operations.ToggleOdd;
+import Operations.Uppercase;
 
 public class RelationalLowercase implements RelationalOperation
 {
@@ -14,32 +17,12 @@ public class RelationalLowercase implements RelationalOperation
     @Override
     public boolean isIndependentOf(RelationalOperation operation)
     {
-        Operation op = operation.op();
-        return op instanceof DeleteFirst
-               || op instanceof DeleteLast
-               || op instanceof Reverse
-               || op instanceof Duplicate
-               || op instanceof Reflect
-               || op instanceof Uppercase
-               || op instanceof ToggleOdd;
-    }
-
-    @Override
-    public RelationalOperation isNegatedBy(RelationalOperation operation)
-    {
-        return null;
+        return op instanceof Uppercase;
     }
 
     @Override
     public boolean subsumes(RelationalOperation operation)
     {
-        Operation op = operation.op();
-        return op instanceof Lowercase || op instanceof ToggleEven;
-    }
-
-    @Override
-    public boolean isUsefulFor(OperationChain chain)
-    {
-        return true;
+        return operation.op() instanceof Lowercase;
     }
 }

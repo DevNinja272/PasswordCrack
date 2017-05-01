@@ -7,8 +7,11 @@ public class DeleteFirst implements Operation
     @Override
     public void apply(StringBuilder s, StringBuilder c)
     {
-        deleted = s.charAt(0);
-        s.deleteCharAt(0);
+        if (s.length() > 0)
+        {
+            deleted = s.charAt(0);
+            s.deleteCharAt(0);
+        }
     }
 
     @Override

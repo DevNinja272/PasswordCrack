@@ -8,8 +8,11 @@ public class DeleteLast implements Operation
     public void apply(StringBuilder s, StringBuilder c)
     {
         int len = s.length();
-        deleted = s.charAt(len);
-        s.deleteCharAt(len);
+        if (len > 0)
+        {
+            deleted = s.charAt(len);
+            s.deleteCharAt(len);
+        }
     }
 
     @Override
