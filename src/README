@@ -1,0 +1,30 @@
+UTEID: jk34669; jaw4978;
+FIRSTNAME: Jinwook; Jesse;
+LASTNAME: Kim; Wright;
+CSACCOUNT: jk34669; jwright;
+EMAIL: jinwook.kim@utexas.edu; jesse.wright@utexas.edu;
+
+[Program 6]
+[Description]
+In our project, we have two big folders, Operations and RelationalOperations. In the Operations folder, it holds all the java files for each of the operations that were described in the specs.
+It includes an interface called Operation and it holds two functions, apply and undo. Each of the java classes implement Operation and is required to have those operations.
+OperationChain.java is a bit different than the other operation files inside the Operations folder. It is the structure of how we want to represent our chains of operations when recursively calling and branching off into other operations.
+In the RelationalOperations folder, it includes an interface called RelationalOperation and it has functions like isIndependentOf() and subsumes() to implement in all the files inside this folder.
+These relations for each operations helps us define when we go down through a route that has a combination inside our chain that is redundant or useless, we just skip it. This will optimize our search effort by not mangling strings that don't need to be mangled to find a matching hash.
+PasswordCracker.java takes in a wordlist and list of password hashes and applies various mangles to the words and sees if they encrypt to any of the hashes.
+It also handles pruning and skips any redundant mangles and parellelizes the encryption of different strings in a word list after they have been mangled.
+
+[Finish]
+We finished 3/4 of the project. The only thing we didn't do is handling the different symbols of prepend and append.
+
+[Test Case 1]
+
+[Input]
+
+[Output]
+
+[Test Case 2]
+
+[Input]
+
+[Output]
