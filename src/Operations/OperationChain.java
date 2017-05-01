@@ -4,11 +4,12 @@ import RelationalOperations.RelationalOperation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Stack;
 
 public class OeprationChain
 {
-    private Stack<Operation> listOfOps;
+    private Stack<RelationalOperation> listOfOps;
     List<StringBuilder> results;
 
     public OeprationChain(List<String> seeds)
@@ -21,19 +22,30 @@ public class OeprationChain
         }
     }
 
-    public void addOp(Operation op)
+    public void addOp(RelationalOperation operation)
     {
-        listOfOps.add(op);
+        listOfOps.add(operation);
+        // Parallelize application
     }
 
-    public boolean wouldCauseRedundancy(RelationalOperation relations, Operation op)
+    public boolean wouldCauseRedundancy(RelationalOperation operation)
     {
-        if (relations.isCommutativeWith(op))
+        int len = listOfOps.size();
+        if (len > 0)
         {
-            for (int i = listOfOps.size(); i > 0; i--)
-            {
+            ListIterator<RelationalOperation> ops = listOfOps.listIterator(len);
 
-            }
+            RelationalOperation op;
+            do
+            {
+                op = ops.previous();
+                if (op.subsumes(operation))
+                {
+                    return true;
+                }
+            } while (ops.hasPrevious());
         }
+
+        return false;
     }
 }
