@@ -30,5 +30,12 @@ public class PasswordCracker
 
     public void applyNextOperation(String hash, Operation op)
     {
+
+        if (op.apply())
     }
+
+    public void filterMangles()
+    {}
+
+    public
 }
