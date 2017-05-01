@@ -115,6 +115,11 @@ public class PasswordCracker
                               }
                           });
             }
+
+            for (Runnable task : tasks)
+            {
+                executorService.execute(task);
+            }
         }
     }
 
@@ -125,7 +130,28 @@ public class PasswordCracker
 
     private void undoOperation(OperationChain chain)
     {
+        List<Runnable>      tasks     = new ArrayList<>(cores);
+        RelationalOperation operation = chain.pop();
 
+        for (int i = 0; i < cores; i++)
+        {
+            int j = i;
+            tasks.add(() ->
+                      {
+                          for (int index = j * words.size() / cores; index
+                                                                     < (j + 1) * words.size()
+                                                                       / cores; index++)
+                          {
+                              StringBuilder mangledWord = mangledWords.get(index);
+                              operation.op().undo(mangledWord);
+                          }
+                      });
+
+            for (Runnable task : tasks)
+            {
+                executorService.execute(task);
+            }
+        }
     }
 
     private void undoOperationWithInput(OperationChain chain)
