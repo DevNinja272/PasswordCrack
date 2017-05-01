@@ -1,5 +1,6 @@
 package Operations;
 
+import RelationalOperations.RelationalCapitalize;
 import RelationalOperations.RelationalOperation;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Stack;
 public class OperationChain
 {
     private Stack<RelationalOperation> listOfOps;
-    List<StringBuilder> results;
+    public List<StringBuilder> results;
 
     public OperationChain(List<String> seeds)
     {
@@ -22,10 +23,14 @@ public class OperationChain
         }
     }
 
-    public void addOp(RelationalOperation operation)
+    public void push(RelationalOperation operation)
     {
         listOfOps.add(operation);
-        // Parallelize application
+    }
+
+    public RelationalOperation pop()
+    {
+        return listOfOps.pop();
     }
 
     public boolean wouldCauseRedundancy(RelationalOperation operation)

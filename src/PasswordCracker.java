@@ -7,6 +7,8 @@ import RelationalOperations.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PasswordCracker
 {
@@ -23,14 +25,20 @@ public class PasswordCracker
                                                              new RelationalToggleEven(),
                                                              new RelationalToggleOdd()};
 
+    private ExecutorService     executorService;
+    private int                 cores;
     private HashSet<String>     passwordHashes;
     private List<String>        words;
     private List<StringBuilder> mangledWords;
+    private int depth = 0;
 
     // TODO: NEED TO INCLUDE PASSWORD SALTS
 
     public PasswordCracker(List<String> passwordHashes, List<String> wordList)
     {
+        this.cores = Runtime.getRuntime().availableProcessors();
+        this.executorService = Executors.newFixedThreadPool(this.cores);
+
         this.passwordHashes = new HashSet<String>(passwordHashes);
         this.words = new ArrayList<>(wordList);
         this.mangledWords = new ArrayList<>(words.size());
@@ -41,21 +49,88 @@ public class PasswordCracker
         }
     }
 
-    public void applyNextOperation(OperationChain chain)
+    private void applyNextOperation(OperationChain chain)
     {
-        for (RelationalOperation op: operations)
+        if (depth == 3)
+        {
+            return;
+        }
+
+        depth += 1;
+        for (RelationalOperation op : operations)
         {
             if (!chain.wouldCauseRedundancy(op))
             {
-                // apply mangle and check if it matches with any of the hashes
-                chain.addOp(op);
+                applyAndCheck(chain, op);
                 applyNextOperation(chain);
-            }
-            else
-            {
-                applyNextOperation(chain);
+                undoOperation(chain);
             }
         }
+
+        depth -= 1;
+    }
+
+    private void applyAndCheck(OperationChain chain, RelationalOperation operation)
+    {
+        if (operation.op() instanceof Append || operation.op() instanceof Prepend)
+        {
+            applyAndCheckWithInput(chain, operation);
+        }
+        else
+        {
+            List<Runnable> tasks = new ArrayList<>(cores);
+            for (int i = 0; i < cores; i++)
+            {
+                int j = i;
+                tasks.add(() ->
+                          {
+                              for (int index = j * words.size() / cores; index
+                                                                         < (j + 1) * words.size()
+                                                                           / cores; index++)
+                              {
+                                  StringBuilder mangledWord = mangledWords.get(index);
+                                  int           origLen     = mangledWord.length();
+
+                                  operation.op().apply(mangledWord, null);
+                                  if (!(origLen >= 8
+                                        && origLen < mangledWord.length()
+                                        && !(operation.op() instanceof Prepend)))
+                                  {
+                                      for (String hash : passwordHashes)
+                                      {
+                                          String trimmed = mangledWord.toString();
+                                          trimmed = trimmed.substring(0,
+                                                                      Math.max(8,
+                                                                               trimmed.length()));
+                                          if (jcrypt.crypt(hash.substring(0, 2), trimmed).equals(
+                                                  hash))
+                                          {
+                                              System.out.println("Password for "
+                                                                 + hash
+                                                                 + " is "
+                                                                 + trimmed);
+                                          }
+                                      }
+                                  }
+                              }
+                          });
+            }
+        }
+    }
+
+    private void applyAndCheckWithInput(OperationChain chain, RelationalOperation operation)
+    {
+
+    }
+
+    private void undoOperation(OperationChain chain)
+    {
+
+    }
+
+    private void undoOperationWithInput(OperationChain chain)
+    {
+
     }
 
     public boolean applyMangleAndCheckMatches(Operation op)
@@ -64,22 +139,32 @@ public class PasswordCracker
         {
             if (op instanceof Append || op instanceof Prepend)
             {
-                for (int asciiChar = 0x20; asciiChar <= 0x7E; i++)
+                for (int asciiChar = 0x20; asciiChar <= (char) 0x7E; i++)
                 {
-                    op.apply(mangledWords[i], (char) asciiChar);
+                    op.apply(mangledWords.get(i), new StringBuilder("" + asciiChar));
                     for (String hash : passwordHashes)
-                        if (mangledWords[i].equals(hash))
+                    {
+                        if (mangledWords.get(i).equals(hash))
+                        {
                             return true;
-                    op.undo(mangledWords[i]);
+                        }
+                    }
+
+                    op.undo(mangledWords.get(i));
                 }
             }
             else
             {
-                op.apply(mangledWords[i], "");
+                op.apply(mangledWords.get(i), null);
                 for (String hash : passwordHashes)
-                    if (mangledWords[i].equals(hash))
+                {
+                    if (mangledWords.get(i).equals(hash))
+                    {
                         return true;
-                op.undo(mangledWords[i]);
+                    }
+                }
+
+                op.undo(mangledWords.get(i));
             }
         }
         return false;
