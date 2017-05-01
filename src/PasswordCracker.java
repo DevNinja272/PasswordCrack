@@ -1,4 +1,7 @@
+import Operations.Append;
 import Operations.Operation;
+import Operations.OperationChain;
+import Operations.Prepend;
 import RelationalOperations.*;
 
 import java.util.ArrayList;
@@ -38,13 +41,47 @@ public class PasswordCracker
         }
     }
 
-    public void applyNextOperation(String hash, Operation op)
+    public void applyNextOperation(OperationChain chain)
     {
-
-        if (op.apply())
+        for (RelationalOperation op: operations)
+        {
+            if (!chain.wouldCauseRedundancy(op))
+            {
+                // apply mangle and check if it matches with any of the hashes
+                chain.addOp(op);
+                applyNextOperation(chain);
+            }
+            else
+            {
+                applyNextOperation(chain);
+            }
+        }
     }
 
-    public void filterMangles()
-    {}
-
+    public boolean applyMangleAndCheckMatches(Operation op)
+    {
+        for (int i = 0; i < this.mangledWords.size(); i++)
+        {
+            if (op instanceof Append || op instanceof Prepend)
+            {
+                for (int asciiChar = 0x20; asciiChar <= 0x7E; i++)
+                {
+                    op.apply(mangledWords[i], (char) asciiChar);
+                    for (String hash : passwordHashes)
+                        if (mangledWords[i].equals(hash))
+                            return true;
+                    op.undo(mangledWords[i]);
+                }
+            }
+            else
+            {
+                op.apply(mangledWords[i], "");
+                for (String hash : passwordHashes)
+                    if (mangledWords[i].equals(hash))
+                        return true;
+                op.undo(mangledWords[i]);
+            }
+        }
+        return false;
+    }
 }

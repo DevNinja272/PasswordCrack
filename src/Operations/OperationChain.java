@@ -43,9 +43,8 @@ public class OperationChain
                 {
                     return true;
                 }
-            } while (ops.hasPrevious());
+            } while (op.isIndependentOf(operation) && ops.hasPrevious());
         }
-
         return false;
     }
 }
