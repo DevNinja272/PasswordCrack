@@ -49,7 +49,7 @@ public class PasswordCracker
         }
     }
 
-    private void applyNextOperation(OperationChain chain)
+    public void applyNextOperation(OperationChain chain)
     {
         if (depth == 3)
         {
@@ -72,6 +72,7 @@ public class PasswordCracker
 
     private void applyAndCheck(OperationChain chain, RelationalOperation operation)
     {
+        chain.push(operation);
         if (operation.op() instanceof Append || operation.op() instanceof Prepend)
         {
             applyAndCheckWithInput(chain, operation);
@@ -159,7 +160,7 @@ public class PasswordCracker
 
     }
 
-    public boolean applyMangleAndCheckMatches(Operation op)
+    private boolean applyMangleAndCheckMatches(Operation op)
     {
         for (int i = 0; i < this.mangledWords.size(); i++)
         {

@@ -1,3 +1,5 @@
+import Operations.OperationChain;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -55,7 +57,7 @@ public class PasswordCrack
         }
 
         PasswordCracker cracker = new PasswordCracker(hashes, words);
-        // TODO: START CRACKING
+        cracker.applyNextOperation(new OperationChain(words));
     }
 
     static void Log(String message)
